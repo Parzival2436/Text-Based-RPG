@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace Text_Based_RPG
 {
-    class Player
+    class Player : GameCharacter
     {
-        int posX;
-        int posY;
-        string avatar;
-        bool pathBlocked;
-
         public Player()
         {
             posX = 10;
             posY = 10;
+            life = 5;
             avatar = "A";
             pathBlocked = false;
         }
@@ -78,11 +74,24 @@ namespace Text_Based_RPG
         public void tileCheck(int x, int y)
         {
             Map map = new Map();
+            Enemy enemy = new Enemy();
+
             string tile = map.mapText[y, x];
             if (tile == map.wall)
             {
                 pathBlocked = true;
             }
+            if (tile == enemy.avatar)
+            {
+                pathBlocked = true;
+                enemy.life -= 1;
+            }
+        }
+
+        public void showHud()
+        {
+            Console.SetCursorPosition(2, 21);
+            Console.Write("Life: " + life);
         }
 
     }

@@ -10,8 +10,8 @@ namespace Text_Based_RPG
     {
         static void Main(string[] args)
         {
+            Console.CursorVisible = false;
             bool gameOver = false;
-
 
             Player player = new Player();
             Map map = new Map();
@@ -25,8 +25,8 @@ namespace Text_Based_RPG
 
             void resetDraw()
             {
-                player.Draw();
                 map.Draw();
+                player.Draw();
             }
         }
     }
