@@ -25,9 +25,8 @@ namespace Text_Based_RPG
 
             void resetDraw()
             {
-                Console.Clear();
-                map.Draw();
                 player.Draw();
+                map.Draw();
             }
         }
     }

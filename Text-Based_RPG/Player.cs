@@ -11,12 +11,14 @@ namespace Text_Based_RPG
         int posX;
         int posY;
         string avatar;
+        bool pathBlocked;
 
         public Player()
         {
             posX = 10;
             posY = 10;
             avatar = "A";
+            pathBlocked = false;
         }
 
         public void Draw()
@@ -33,31 +35,54 @@ namespace Text_Based_RPG
             input = Console.ReadKey(true);
             if (input.KeyChar == 'w')
             {
-                tileCheck(posX, posY + 1);
+                tileCheck(posX, posY - 1);
+                if (pathBlocked)
+                {
+                    pathBlocked = false;
+                    return;
+                }
                 posY -= 1;
             }
             if (input.KeyChar == 'a')
             {
                 tileCheck(posX - 1, posY);
+                if (pathBlocked)
+                {
+                    pathBlocked = false;
+                    return;
+                }
                 posX -= 1;
             }
             if (input.KeyChar == 's')
             {
-                tileCheck(posX, posY - 1);
+                tileCheck(posX, posY + 1);
+                if (pathBlocked)
+                {
+                    pathBlocked = false;
+                    return;
+                }
                 posY += 1;
             }
             if (input.KeyChar == 'd')
             {
                 tileCheck(posX + 1, posY);
+                if (pathBlocked)
+                {
+                    pathBlocked = false;
+                    return;
+                }
                 posX += 1;
             }
         }
 
-        protected void tileCheck(int x, int y)
+        public void tileCheck(int x, int y)
         {
-            Console.SetCursorPosition(x, y);
-            char tile = Console.ReadKey().KeyChar;
-            avatar = Char.ToString(tile); //debug
+            Map map = new Map();
+            string tile = map.mapText[y, x];
+            if (tile == map.wall)
+            {
+                pathBlocked = true;
+            }
         }
 
     }
